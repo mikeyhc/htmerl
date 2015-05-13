@@ -1,0 +1,12 @@
+{application, htmerl,
+ [
+  {description, "A simple (and imcomplete) library for generating html"},
+  {vsn, "1"},
+  {modules, [ htmerl
+            ]},
+  {registered, []},
+  {applications, [ kernel,
+                   stdlib
+                 ]},
+  {env, []}
+ ]}.
