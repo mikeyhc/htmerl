@@ -4,6 +4,8 @@
 
 -export([% render functions
          render/1, render_tag/1, render_tags/1,
+         % document functions
+         make_document/2,
          % general tags
          tag/2, tag/3,
          % standard tags
@@ -34,6 +36,13 @@ render_tag(#tag{name=N, content=C}) ->
 render_tags(L) ->
     lists:foldl(fun(X, A) -> <<X/binary, A/binary>> end, <<>>,
                 lists:map(fun render/1, L)).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Document Functions %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+-spec make_document(tag() | [tag()], html() | [html()]) -> document().
+make_document(Head, Body) -> #document{head=Head, body=Body}.
 
 %%%%%%%%%%%%%%%%%%%%
 %%% General Tags %%%
