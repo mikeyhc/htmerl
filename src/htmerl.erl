@@ -24,6 +24,7 @@ render(#document{doctype=DT, head=H, body=B}) ->
 
 -spec render_tag(no_html | tag()) -> binary().
 render_tag(no_html) -> <<>>;
+render_tag(B) when is_binary(B) -> B;
 render_tag(#tag{name=N, content=[], can_empty=true}) ->
     <<"<", N/binary, "\n/>">>;
 render_tag(#tag{name=N, content=no_html, can_empty=true}) ->
@@ -35,7 +36,7 @@ render_tag(#tag{name=N, content=C}) ->
 -spec render_tags([tag()]) -> binary().
 render_tags(L) ->
     lists:foldl(fun(X, A) -> <<X/binary, A/binary>> end, <<>>,
-                lists:map(fun render/1, L)).
+                lists:map(fun render_tag/1, L)).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Document Functions %%%
