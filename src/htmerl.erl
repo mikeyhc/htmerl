@@ -31,7 +31,7 @@ render_tag(#tag{name=N, content=no_html, can_empty=true}) ->
     <<"<", N/binary, "\n/>">>;
 render_tag(#tag{name=N, content=C}) ->
     Content = render_tags(C),
-    <<"<", N/binary, "\n>", Content/binary, "</", N/binary, ">">>.
+    <<"<", N/binary, "\n>", Content/binary, "</", N/binary, "\n>">>.
 
 -spec render_tags([tag()]) -> binary().
 render_tags(L) ->
