@@ -15,8 +15,8 @@
          input/1, link/0, option/1, select/1, span/1, submit/1,
          table/1, tbody/1, td/1, textarea/1, title/1, tr/1,
          % standard attributes
-         action/1, class/1, href/1, id/1, method/1, onclick/1, rel/1,
-         src/1, type/1
+         action/1, class/1, href/1, id/1, method/1, multiple/0, onclick/1,
+         rel/1, size/1, src/1, type/1, value/1
         ]).
 
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -57,6 +57,7 @@ render_attributes(L) ->
                 lists:map(fun render_attribute/1, AgList)).
 
 -spec render_attribute(attribute()) -> binary().
+render_attribute(#attribute{name=N, value=empty}) -> N;
 render_attribute(#attribute{name=N, value=V}) ->
     <<N/binary, "=\'", V/binary, "\'">>.
 
@@ -213,14 +214,23 @@ id(V) -> attribute(<<"id">>, V).
 -spec method(binary()) -> attribute().
 method(V) -> attribute(<<"method">>, V).
 
+-spec multiple() -> attribute().
+multiple() -> attribute(<<"multiple">>, empty).
+
 -spec onclick(binary()) -> attribute().
 onclick(V) -> attribute(<<"onclick">>, V).
 
 -spec rel(binary()) -> attribute().
 rel(V) -> attribute(<<"rel">>, V).
 
+-spec size(binary()) -> attribute().
+size(V) -> attribute(<<"size">>, V).
+
 -spec src(binary()) -> attribute().
 src(V) -> attribute(<<"src">>, V).
 
 -spec type(binary()) -> attribute().
 type(V) -> attribute(<<"type">>, V).
+
+-spec value(binary()) -> attribute().
+value(V) -> attribute(<<"value">>, V).

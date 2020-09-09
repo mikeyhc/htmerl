@@ -10,7 +10,7 @@
 -type tag() :: #tag{}.
 
 -record(attribute, {name  :: binary(),
-                    value :: binary()}).
+                    value :: binary() | empty}).
 -type attribute() :: #attribute{}.
 
 -type html() :: tag() | binary() | no_html.

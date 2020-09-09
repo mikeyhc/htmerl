@@ -48,7 +48,11 @@ add_attribute_test_() ->
                                          value=default}
                             ]},
                     htmerl:add_attributes(htmerl:link(),
-                                          [htmerl:href(default)]))
+                                          [htmerl:href(default)])),
+      ?_assertEqual(<<"<link multiple  \n/>">>,
+                    htmerl:render_tag(
+                      htmerl:add_attribute(htmerl:link(),
+                                           htmerl:multiple())))
     ].
 
 join_attribute_test_() ->
@@ -116,6 +120,9 @@ tags_test_() ->
 default_attribute(Name, F) ->
     ?_assertEqual(#attribute{name=Name, value=default}, F(default)).
 
+default_empty_attribute(Name, F) ->
+    ?_assertEqual(#attribute{name=Name, value=empty}, F()).
+
 attribute_test_() ->
     [ default_attribute(<<"test">>,
                         fun(X) -> htmerl:attribute(<<"test">>, X) end),
@@ -127,7 +134,12 @@ attribute_test_() ->
                  {fun htmerl:method/1, <<"method">>},
                  {fun htmerl:onclick/1, <<"onclick">>},
                  {fun htmerl:rel/1, <<"rel">>},
+                 {fun htmerl:size/1, <<"size">>},
                  {fun htmerl:src/1, <<"src">>},
-                 {fun htmerl:type/1, <<"type">>}
+                 {fun htmerl:type/1, <<"type">>},
+                 {fun htmerl:value/1, <<"value">>}
+                ]),
+      lists:map(fun({X, Y}) -> default_empty_attribute(Y, X) end,
+                [{fun htmerl:multiple/0, <<"multiple">>}
                 ])
     ].
