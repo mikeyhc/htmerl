@@ -14,7 +14,7 @@
          anchor/1, body/1, div_tag/1, h1/1, head/1, html/1, link/0,
          span/1, table/1, tbody/1, td/1, title/1, tr/1,
          % standard attributes
-         class/1, href/1, id/1, rel/1, src/1, type/1
+         class/1, href/1, id/1, onclick/1, rel/1, src/1, type/1
         ]).
 
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -152,6 +152,9 @@ href(V) -> attribute(<<"href">>, V).
 
 -spec id(binary()) -> attribute().
 id(V) -> attribute(<<"id">>, V).
+
+-spec onclick(binary()) -> attribute().
+onclick(V) -> attribute(<<"onclick">>, V).
 
 -spec rel(binary()) -> attribute().
 rel(V) -> attribute(<<"rel">>, V).

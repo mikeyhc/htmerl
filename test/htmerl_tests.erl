@@ -101,6 +101,7 @@ attribute_test_() ->
                 [{fun htmerl:class/1, <<"class">>},
                  {fun htmerl:href/1, <<"href">>},
                  {fun htmerl:id/1, <<"id">>},
+                 {fun htmerl:onclick/1, <<"onclick">>},
                  {fun htmerl:rel/1, <<"rel">>},
                  {fun htmerl:src/1, <<"src">>},
                  {fun htmerl:type/1, <<"type">>}
