@@ -51,7 +51,6 @@ render_tags(L) ->
 -spec render_attributes([attribute()]) -> binary().
 render_attributes(L) ->
     AgList = aggregate_attrs(L),
-    io:format("~w~n", [AgList]),
     lists:foldl(fun bin_join_space/2, <<>>,
                 lists:map(fun render_attribute/1, AgList)).
 
