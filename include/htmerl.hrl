@@ -3,7 +3,7 @@
                    body=no_html        :: no_html | tag()}).
 -type document() :: #document{}.
 
--record(tag, {name           :: binary(),
+-record(tag, {name= <<>>     :: binary(),
               attributes=[]  :: [attribute()],
               can_empty=true :: boolean(),
               content=[]     :: [tag() | binary()]}).

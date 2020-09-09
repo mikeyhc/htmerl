@@ -107,7 +107,7 @@ make_document(Head, Body) -> #document{head=Head, body=Body}.
 
 flip(F) -> fun(X, Y) -> F(Y, X) end.
 
--spec attribute(binary(), binary()) -> attribute().
+-spec attribute(binary(), binary() | empty) -> attribute().
 attribute(Name, Value) -> #attribute{name=Name, value=Value}.
 
 -spec add_attribute(tag(), attribute()) -> tag().
