@@ -67,22 +67,22 @@ tags_test_() ->
                     htmerl:tag(<<"test">>, a)),
       ?_assertError({invalid_tag_options, x},
                     htmerl:tag(<<"test">>, no_html, [x])),
-      lists:map(fun({X, Y}) -> no_html_ne_tag(Y, fun htmerl:X/1) end,
-                [ {anchor, <<"a">>},
-                  {body, <<"body">>},
-                  {div_tag, <<"div">>},
-                  {head, <<"head">>},
-                  {html, <<"html">>}
+      lists:map(fun({X, Y}) -> no_html_ne_tag(Y, X) end,
+                [ {fun htmerl:anchor/1, <<"a">>},
+                  {fun htmerl:body/1, <<"body">>},
+                  {fun htmerl:div_tag/1, <<"div">>},
+                  {fun htmerl:head/1, <<"head">>},
+                  {fun htmerl:html/1, <<"html">>}
                 ]),
       no_html_tag(<<"link">>, fun(_) -> htmerl:link() end),
-      lists:map(fun({X, Y}) -> no_html_tag(Y, fun htmerl:X/1) end,
-                [ {h1, <<"h1">>},
-                  {span, <<"span">>},
-                  {table, <<"table">>},
-                  {tbody, <<"tbody">>},
-                  {td, <<"td">>},
-                  {title, <<"title">>},
-                  {tr, <<"tr">>}
+      lists:map(fun({X, Y}) -> no_html_tag(Y, X) end,
+                [ {fun htmerl:h1/1, <<"h1">>},
+                  {fun htmerl:span/1, <<"span">>},
+                  {fun htmerl:table/1, <<"table">>},
+                  {fun htmerl:tbody/1, <<"tbody">>},
+                  {fun htmerl:td/1, <<"td">>},
+                  {fun htmerl:title/1, <<"title">>},
+                  {fun htmerl:tr/1, <<"tr">>}
                 ])
     ].
 
@@ -97,12 +97,12 @@ default_attribute(Name, F) ->
 attribute_test_() ->
     [ default_attribute(<<"test">>,
                         fun(X) -> htmerl:attribute(<<"test">>, X) end),
-      lists:map(fun({X, Y}) -> default_attribute(Y, fun htmerl:X/1) end,
-                [{class, <<"class">>},
-                 {href, <<"href">>},
-                 {id, <<"id">>},
-                 {rel, <<"rel">>},
-                 {src, <<"src">>},
-                 {type, <<"type">>}
+      lists:map(fun({X, Y}) -> default_attribute(Y, X) end,
+                [{fun htmerl:class/1, <<"class">>},
+                 {fun htmerl:href/1, <<"href">>},
+                 {fun htmerl:id/1, <<"id">>},
+                 {fun htmerl:rel/1, <<"rel">>},
+                 {fun htmerl:src/1, <<"src">>},
+                 {fun htmerl:type/1, <<"type">>}
                 ])
     ].
