@@ -132,6 +132,7 @@ attribute_test_() ->
                  {fun htmerl:href/1, <<"href">>},
                  {fun htmerl:id/1, <<"id">>},
                  {fun htmerl:method/1, <<"method">>},
+                 {fun htmerl:name/1, <<"name">>},
                  {fun htmerl:onclick/1, <<"onclick">>},
                  {fun htmerl:rel/1, <<"rel">>},
                  {fun htmerl:size/1, <<"size">>},
