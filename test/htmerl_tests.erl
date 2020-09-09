@@ -3,9 +3,6 @@
 -include_lib("eunit/include/eunit.hrl").
 -include("htmerl.hrl").
 
--compile([export_all]).
-
-
 render_test_() ->
     [ ?_assertEqual(<<"<!DOCTYPE html>\n\n"
                       "<html \n>"
