@@ -11,9 +11,9 @@
          % attribute functions
          attribute/2, add_attribute/2, add_attributes/2,
          % standard tags
-         body/1, h1/1, head/1, link/0,
+         body/1, div_tag/1, h1/1, head/1, link/0, span/1,
          % standard attributes
-         rel/1, src/1, type/1
+         class/1, href/1, id/1, rel/1, src/1, type/1
         ]).
 
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -39,7 +39,7 @@ render_tag(T=#tag{name=N, content=C}) ->
       "</", N/binary, "\n>">>.
 
 -spec bin_join(binary(), binary()) -> binary().
-bin_join(X, Y) -> <<X/binary, Y/binary>>.
+bin_join(X, Y) -> <<Y/binary, X/binary>>.
 
 -spec bin_join_space(binary(), binary()) -> binary().
 bin_join_space(X, Y) -> <<X/binary, " ", Y/binary>>.
@@ -104,6 +104,9 @@ handle_tag_opts(T,  _) -> error({invalid_tag_options, T}).
 -spec body(html() | [html()]) -> tag().
 body(Tags) -> tag(<<"body">>, Tags, [{can_empty, false}]).
 
+-spec div_tag(html() | [html()]) -> tag().
+div_tag(Tags) -> tag(<<"div">>, Tags, [{can_empty, false}]).
+
 -spec h1(binary()) -> tag().
 h1(Value) -> tag(<<"h1">>, Value).
 
@@ -113,15 +116,27 @@ head(Tags) -> tag(<<"head">>, Tags, [{can_empty, false}]).
 -spec link() -> tag().
 link() -> tag(<<"link">>, no_html).
 
+-spec span(html() | [html()]) -> tag().
+span(Tag) -> tag(<<"span">>, Tag).
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Standard Attributes %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
--spec rel(binary()) -> tag().
+-spec class(binary()) -> attribute().
+class(V) -> attribute(<<"class">>, V).
+
+-spec href(binary()) -> attribute().
+href(V) -> attribute(<<"href">>, V).
+
+-spec id(binary()) -> attribute().
+id(V) -> attribute(<<"id">>, V).
+
+-spec rel(binary()) -> attribute().
 rel(V) -> attribute(<<"rel">>, V).
 
--spec src(binary()) -> tag().
+-spec src(binary()) -> attribute().
 src(V) -> attribute(<<"src">>, V).
 
--spec type(binary()) -> tag().
+-spec type(binary()) -> attribute().
 type(V) -> attribute(<<"type">>, V).
