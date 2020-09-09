@@ -175,7 +175,7 @@ select(Tags) -> tag(<<"select">>, Tags, [{can_empty, false}]).
 span(Tag) -> tag(<<"span">>, Tag).
 
 -spec submit(html() | [html()]) -> tag().
-submit(Tag) -> tag(<<"submit">>, Tag).
+submit(Tag) -> tag(<<"submit">>, Tag, [{can_empty, false}]).
 
 -spec table(tag() | [tag()]) -> tag().
 table(Tag) -> tag(<<"table">>, Tag).
@@ -184,7 +184,7 @@ table(Tag) -> tag(<<"table">>, Tag).
 tbody(Tag) -> tag(<<"tbody">>, Tag).
 
 -spec td(html() | [html()]) -> tag().
-td(Value) -> tag(<<"td">>, Value).
+td(Value) -> tag(<<"td">>, Value, [{can_empty, false}]).
 
 -spec textarea(binary()) -> tag().
 textarea(Value) -> tag(<<"textarea">>, Value, [{can_empty, false}]).
@@ -193,7 +193,7 @@ textarea(Value) -> tag(<<"textarea">>, Value, [{can_empty, false}]).
 title(Value) -> tag(<<"title">>, Value).
 
 -spec tr(tag() | [tag()]) -> tag().
-tr(Tag) -> tag(<<"tr">>, Tag).
+tr(Tag) -> tag(<<"tr">>, Tag, [{can_empty, false}]).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Standard Attributes %%%

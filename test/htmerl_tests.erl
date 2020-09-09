@@ -96,19 +96,19 @@ tags_test_() ->
                   {fun htmerl:html/1, <<"html">>},
                   {fun htmerl:option/1, <<"option">>},
                   {fun htmerl:select/1, <<"select">>},
-                  {fun htmerl:textarea/1, <<"textarea">>}
+                  {fun htmerl:submit/1, <<"submit">>},
+                  {fun htmerl:td/1, <<"td">>},
+                  {fun htmerl:textarea/1, <<"textarea">>},
+                  {fun htmerl:tr/1, <<"tr">>}
                 ]),
       no_html_tag(<<"link">>, fun(_) -> htmerl:link() end),
       lists:map(fun({X, Y}) -> no_html_tag(Y, X) end,
                 [ {fun htmerl:h1/1, <<"h1">>},
                   {fun htmerl:input/1, <<"input">>},
                   {fun htmerl:span/1, <<"span">>},
-                  {fun htmerl:submit/1, <<"submit">>},
                   {fun htmerl:table/1, <<"table">>},
                   {fun htmerl:tbody/1, <<"tbody">>},
-                  {fun htmerl:td/1, <<"td">>},
-                  {fun htmerl:title/1, <<"title">>},
-                  {fun htmerl:tr/1, <<"tr">>}
+                  {fun htmerl:title/1, <<"title">>}
                 ])
     ].
 
