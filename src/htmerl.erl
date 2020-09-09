@@ -11,10 +11,12 @@
          % attribute functions
          attribute/2, add_attribute/2, add_attributes/2,
          % standard tags
-         anchor/1, body/1, div_tag/1, h1/1, head/1, html/1, link/0,
-         span/1, table/1, tbody/1, td/1, title/1, tr/1,
+         anchor/1, body/1, div_tag/1, form/1, h1/1, head/1, html/1,
+         input/1, link/0, option/1, select/1, span/1, submit/1,
+         table/1, tbody/1, td/1, textarea/1, title/1, tr/1,
          % standard attributes
-         class/1, href/1, id/1, onclick/1, rel/1, src/1, type/1
+         action/1, class/1, href/1, id/1, method/1, onclick/1, rel/1,
+         src/1, type/1
         ]).
 
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -62,6 +64,7 @@ render_attribute(#attribute{name=N, value=V}) ->
 aggregate_attrs(L) ->
     lists:foldl(fun aggregate_attr/2, [], L).
 
+-spec aggregate_attr(attribute(), [attribute()]) -> [attribute()].
 aggregate_attr(Attr, List) ->
     Match = fun(X) -> same_attr(Attr, X) end,
     case remove(Match, List) of
@@ -69,6 +72,7 @@ aggregate_attr(Attr, List) ->
         List   -> [Attr|List]
     end.
 
+-spec remove(fun((T) -> boolean()), [T]) -> {T, [T]} | [T].
 remove(_Fun, []) -> [];
 remove(Fun, [H|T]) ->
     case Fun(H) of
@@ -80,8 +84,10 @@ remove(Fun, [H|T]) ->
            end
     end.
 
+-spec same_attr(attribute(), attribute()) -> boolean().
 same_attr(A1, A2) -> A1#attribute.name =:= A2#attribute.name.
 
+-spec join_attr(attribute(), attribute()) -> attribute().
 join_attr(A1, A2) ->
     A1V = A1#attribute.value,
     A2V = A2#attribute.value,
@@ -140,6 +146,9 @@ body(Tags) -> tag(<<"body">>, Tags, [{can_empty, false}]).
 -spec div_tag(html() | [html()]) -> tag().
 div_tag(Tags) -> tag(<<"div">>, Tags, [{can_empty, false}]).
 
+-spec form(html() | [html()]) -> tag().
+form(Tags) -> tag(<<"form">>, Tags, [{can_empty, false}]).
+
 -spec h1(binary()) -> tag().
 h1(Value) -> tag(<<"h1">>, Value).
 
@@ -149,11 +158,23 @@ head(Tags) -> tag(<<"head">>, Tags, [{can_empty, false}]).
 -spec html(tag() | [tag()]) -> tag().
 html(Tags) -> tag(<<"html">>, Tags, [{can_empty, false}]).
 
+-spec input(html() | [html()]) -> tag().
+input(Tags) -> tag(<<"input">>, Tags).
+
 -spec link() -> tag().
 link() -> tag(<<"link">>, no_html).
 
+-spec option(binary()) -> tag().
+option(Value) -> tag(<<"option">>, Value, [{can_empty, false}]).
+
+-spec select(tag() | [tag()]) -> tag().
+select(Tags) -> tag(<<"select">>, Tags, [{can_empty, false}]).
+
 -spec span(html() | [html()]) -> tag().
 span(Tag) -> tag(<<"span">>, Tag).
+
+-spec submit(html() | [html()]) -> tag().
+submit(Tag) -> tag(<<"submit">>, Tag).
 
 -spec table(tag() | [tag()]) -> tag().
 table(Tag) -> tag(<<"table">>, Tag).
@@ -163,6 +184,9 @@ tbody(Tag) -> tag(<<"tbody">>, Tag).
 
 -spec td(html() | [html()]) -> tag().
 td(Value) -> tag(<<"td">>, Value).
+
+-spec textarea(binary()) -> tag().
+textarea(Value) -> tag(<<"textarea">>, Value, [{can_empty, false}]).
 
 -spec title(binary()) -> tag().
 title(Value) -> tag(<<"title">>, Value).
@@ -174,6 +198,9 @@ tr(Tag) -> tag(<<"tr">>, Tag).
 %%% Standard Attributes %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+-spec action(binary()) -> attribute().
+action(V) -> attribute(<<"action">>, V).
+
 -spec class(binary()) -> attribute().
 class(V) -> attribute(<<"class">>, V).
 
@@ -182,6 +209,9 @@ href(V) -> attribute(<<"href">>, V).
 
 -spec id(binary()) -> attribute().
 id(V) -> attribute(<<"id">>, V).
+
+-spec method(binary()) -> attribute().
+method(V) -> attribute(<<"method">>, V).
 
 -spec onclick(binary()) -> attribute().
 onclick(V) -> attribute(<<"onclick">>, V).
