@@ -50,12 +50,43 @@ render_tags(L) ->
 
 -spec render_attributes([attribute()]) -> binary().
 render_attributes(L) ->
+    AgList = aggregate_attrs(L),
+    io:format("~w~n", [AgList]),
     lists:foldl(fun bin_join_space/2, <<>>,
-                lists:map(fun render_attribute/1, L)).
+                lists:map(fun render_attribute/1, AgList)).
 
 -spec render_attribute(attribute()) -> binary().
 render_attribute(#attribute{name=N, value=V}) ->
     <<N/binary, "=\'", V/binary, "\'">>.
+
+-spec aggregate_attrs([attribute()]) -> [attribute()].
+aggregate_attrs(L) ->
+    lists:foldl(fun aggregate_attr/2, [], L).
+
+aggregate_attr(Attr, List) ->
+    Match = fun(X) -> same_attr(Attr, X) end,
+    case remove(Match, List) of
+        {E, L} -> [join_attr(E, Attr)|L];
+        List   -> [Attr|List]
+    end.
+
+remove(_Fun, []) -> [];
+remove(Fun, [H|T]) ->
+    case Fun(H) of
+        true -> {H, T};
+        _    ->
+           case remove(Fun, T) of
+               {R, NT} -> {R, [H|NT]};
+               List    -> [H|List]
+           end
+    end.
+
+same_attr(A1, A2) -> A1#attribute.name =:= A2#attribute.name.
+
+join_attr(A1, A2) ->
+    A1V = A1#attribute.value,
+    A2V = A2#attribute.value,
+    A1#attribute{value=bin_join_space(A2V, A1V)}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Document Functions %%%

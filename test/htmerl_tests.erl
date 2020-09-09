@@ -51,6 +51,15 @@ add_attribute_test_() ->
                                           [htmerl:href(default)]))
     ].
 
+join_attribute_test_() ->
+    [ ?_assertEqual(<<"<link class='a b'  \n/>">>,
+                    htmerl:render_tag(
+                      htmerl:add_attributes(htmerl:link(),
+                                            [ htmerl:class(<<"a">>),
+                                              htmerl:class(<<"b">>)
+                                            ])))
+    ].
+
 %%%%%%%%%%%%%%%%%
 %%% Tag Tests %%%
 %%%%%%%%%%%%%%%%%
