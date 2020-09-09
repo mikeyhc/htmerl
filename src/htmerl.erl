@@ -11,8 +11,8 @@
          % attribute functions
          attribute/2, add_attribute/2, add_attributes/2,
          % standard tags
-         anchor/1, body/1, div_tag/1, h1/1, head/1, link/0, span/1,
-         table/1, tbody/1, td/1, title/1, tr/1,
+         anchor/1, body/1, div_tag/1, h1/1, head/1, html/1, link/0,
+         span/1, table/1, tbody/1, td/1, title/1, tr/1,
          % standard attributes
          class/1, href/1, id/1, rel/1, src/1, type/1
         ]).
@@ -23,9 +23,8 @@
 
 -spec render(document()) -> binary().
 render(#document{doctype=DT, head=H, body=B}) ->
-    Head = render_tag(H),
-    Body = render_tag(B),
-    <<"<!DOCTYPE ", DT/binary, ">\n\n", Head/binary, Body/binary>>.
+    HTML = render_tag(htmerl:html([H, B])),
+    <<"<!DOCTYPE ", DT/binary, ">\n\n", HTML/binary>>.
 
 -spec render_tag(no_html | tag()) -> binary().
 render_tag(no_html) -> <<>>;
@@ -116,6 +115,9 @@ h1(Value) -> tag(<<"h1">>, Value).
 
 -spec head(tag() | [tag()]) -> tag().
 head(Tags) -> tag(<<"head">>, Tags, [{can_empty, false}]).
+
+-spec html(tag() | [tag()]) -> tag().
+html(Tags) -> tag(<<"html">>, Tags, [{can_empty, false}]).
 
 -spec link() -> tag().
 link() -> tag(<<"link">>, no_html).
