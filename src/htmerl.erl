@@ -11,7 +11,8 @@
          % attribute functions
          attribute/2, add_attribute/2, add_attributes/2,
          % standard tags
-         body/1, div_tag/1, h1/1, head/1, link/0, span/1,
+         anchor/1, body/1, div_tag/1, h1/1, head/1, link/0, span/1,
+         table/1, tbody/1, td/1, title/1, tr/1,
          % standard attributes
          class/1, href/1, id/1, rel/1, src/1, type/1
         ]).
@@ -101,6 +102,9 @@ handle_tag_opts(T,  _) -> error({invalid_tag_options, T}).
 %%% Standard Tags %%%
 %%%%%%%%%%%%%%%%%%%%%
 
+-spec anchor(html() | [html()]) -> tag().
+anchor(Tags) -> tag(<<"a">>, Tags, [{can_empty, false}]).
+
 -spec body(html() | [html()]) -> tag().
 body(Tags) -> tag(<<"body">>, Tags, [{can_empty, false}]).
 
@@ -118,6 +122,21 @@ link() -> tag(<<"link">>, no_html).
 
 -spec span(html() | [html()]) -> tag().
 span(Tag) -> tag(<<"span">>, Tag).
+
+-spec table(tag() | [tag()]) -> tag().
+table(Tag) -> tag(<<"table">>, Tag).
+
+-spec tbody(tag() | [tag()]) -> tag().
+tbody(Tag) -> tag(<<"tbody">>, Tag).
+
+-spec td(html() | [html()]) -> tag().
+td(Value) -> tag(<<"td">>, Value).
+
+-spec title(binary()) -> tag().
+title(Value) -> tag(<<"title">>, Value).
+
+-spec tr(tag() | [tag()]) -> tag().
+tr(Tag) -> tag(<<"tr">>, Tag).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Standard Attributes %%%
