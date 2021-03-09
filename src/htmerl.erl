@@ -14,6 +14,8 @@
          anchor/1, body/1, div_tag/1, form/1, h1/1, head/1, html/1,
          input/1, link/0, option/1, select/1, span/1, submit/1,
          table/1, tbody/1, td/1, textarea/1, title/1, tr/1,
+         article/1, aside/1, details/1, figcaption/1, figure/1, footer/1,
+         header/1, main/1, mark/1, nav/1, section/1, summary/1, time/1,
          % standard attributes
          action/1, class/1, href/1, id/1, method/1, multiple/0, name/1,
          onclick/1, rel/1, size/1, src/1, type/1, value/1
@@ -194,6 +196,45 @@ title(Value) -> tag(<<"title">>, Value).
 
 -spec tr(tag() | [tag()]) -> tag().
 tr(Tag) -> tag(<<"tr">>, Tag, [{can_empty, false}]).
+
+-spec article(tag() | [tag()]) -> tag().
+article(Tag) -> tag(<<"article">>, Tag, [{can_empty, false}]).
+
+-spec aside(tag() | [tag()]) -> tag().
+aside(Tag) -> tag(<<"aside">>, Tag, [{can_empty, false}]).
+
+-spec details(tag() | [tag()]) -> tag().
+details(Tag) -> tag(<<"details">>, Tag, [{can_empty, false}]).
+
+-spec figcaption(tag() | [tag()]) -> tag().
+figcaption(Tag) -> tag(<<"figcaption">>, Tag, [{can_empty, false}]).
+
+-spec figure(tag() | [tag()]) -> tag().
+figure(Tag) -> tag(<<"figure">>, Tag, [{can_empty, false}]).
+
+-spec footer(tag() | [tag()]) -> tag().
+footer(Tag) -> tag(<<"footer">>, Tag, [{can_empty, false}]).
+
+-spec header(tag() | [tag()]) -> tag().
+header(Tag) -> tag(<<"header">>, Tag, [{can_empty, false}]).
+
+-spec main(tag() | [tag()]) -> tag().
+main(Tag) -> tag(<<"main">>, Tag, [{can_empty, false}]).
+
+-spec mark(tag() | [tag()]) -> tag().
+mark(Tag) -> tag(<<"mark">>, Tag, [{can_empty, false}]).
+
+-spec nav(tag() | [tag()]) -> tag().
+nav(Tag) -> tag(<<"nav">>, Tag, [{can_empty, false}]).
+
+-spec section(tag() | [tag()]) -> tag().
+section(Tag) -> tag(<<"section">>, Tag, [{can_empty, false}]).
+
+-spec summary(tag() | [tag()]) -> tag().
+summary(Tag) -> tag(<<"summary">>, Tag, [{can_empty, false}]).
+
+-spec time(tag() | [tag()]) -> tag().
+time(Tag) -> tag(<<"time">>, Tag, [{can_empty, false}]).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Standard Attributes %%%
