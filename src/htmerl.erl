@@ -11,11 +11,12 @@
          % attribute functions
          attribute/2, add_attribute/2, add_attributes/2,
          % standard tags
-         anchor/1, body/1, div_tag/1, form/1, h1/1, head/1, html/1,
+         anchor/1, body/1, div_tag/1, form/1, head/1, html/1,
          input/1, link/0, option/1, select/1, span/1, submit/1,
          table/1, tbody/1, td/1, textarea/1, title/1, tr/1,
          article/1, aside/1, details/1, figcaption/1, figure/1, footer/1,
          header/1, main/1, mark/1, nav/1, section/1, summary/1, time/1,
+         h1/1, h2/1, h3/1, h4/1, h5/1, h6/1,
          % standard attributes
          action/1, class/1, href/1, id/1, method/1, multiple/0, name/1,
          onclick/1, rel/1, size/1, src/1, type/1, value/1
@@ -152,9 +153,6 @@ div_tag(Tags) -> tag(<<"div">>, Tags, [{can_empty, false}]).
 -spec form(html() | [html()]) -> tag().
 form(Tags) -> tag(<<"form">>, Tags, [{can_empty, false}]).
 
--spec h1(binary()) -> tag().
-h1(Value) -> tag(<<"h1">>, Value).
-
 -spec head(tag() | [tag()]) -> tag().
 head(Tags) -> tag(<<"head">>, Tags, [{can_empty, false}]).
 
@@ -235,6 +233,24 @@ summary(Tag) -> tag(<<"summary">>, Tag, [{can_empty, false}]).
 
 -spec time(tag() | [tag()]) -> tag().
 time(Tag) -> tag(<<"time">>, Tag, [{can_empty, false}]).
+
+-spec h1(tag() | [tag()]) -> tag().
+h1(Tag) -> tag(<<"h1">>, Tag, [{can_empty, false}]).
+
+-spec h2(tag() | [tag()]) -> tag().
+h2(Tag) -> tag(<<"h2">>, Tag, [{can_empty, false}]).
+
+-spec h3(tag() | [tag()]) -> tag().
+h3(Tag) -> tag(<<"h3">>, Tag, [{can_empty, false}]).
+
+-spec h4(tag() | [tag()]) -> tag().
+h4(Tag) -> tag(<<"h4">>, Tag, [{can_empty, false}]).
+
+-spec h5(tag() | [tag()]) -> tag().
+h5(Tag) -> tag(<<"h5">>, Tag, [{can_empty, false}]).
+
+-spec h6(tag() | [tag()]) -> tag().
+h6(Tag) -> tag(<<"h6">>, Tag, [{can_empty, false}]).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Standard Attributes %%%
