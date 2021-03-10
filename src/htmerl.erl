@@ -43,9 +43,12 @@ render_tag(T=#tag{name=N, content=C}) ->
     ["<", N, " ", Attrs, "\n>", Content, "</", N, "\n>"].
 
 
--spec render_tags([tag()]) -> iolist().
-render_tags(L) ->
-    lists:map(fun render_tag/1, L).
+% TODO handle the string case elsewhere
+-spec render_tags([tag()] | string()) -> iolist().
+render_tags([]) -> [];
+render_tags(L=[H|_]) when is_tuple(H) ->
+    lists:map(fun render_tag/1, L);
+render_tags(S) -> S.
 
 -spec render_attributes([attribute()]) -> iolist().
 render_attributes(L) ->
