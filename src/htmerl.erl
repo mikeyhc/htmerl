@@ -46,9 +46,11 @@ render_tag(T=#tag{name=N, content=C}) ->
 % TODO handle the string case elsewhere
 -spec render_tags([tag()] | string()) -> iolist().
 render_tags([]) -> [];
-render_tags(L=[H|_]) when is_tuple(H) ->
-    lists:map(fun render_tag/1, L);
-render_tags(S) -> S.
+render_tags(L) ->
+    case lists:any(fun is_tuple/1, L) of
+        true -> lists:map(fun render_tag/1, L);
+        false -> L
+    end.
 
 -spec render_attributes([attribute()]) -> iolist().
 render_attributes(L) ->
