@@ -4,15 +4,17 @@
 -include("htmerl.hrl").
 
 render_test_() ->
-    [ ?_assertEqual(<<"<!DOCTYPE html>\n\n"
-                      "<html \n>"
-                      "<head \n>"
-                        "<link href='default'  \n/>"
-                      "</head\n>"
-                      "<body \n>"
-                      "body"
-                      "</body\n>"
-                      "</html\n>">>,
+    [ ?_assertEqual(["<!DOCTYPE ",<<"html">>,">\n\n",
+                     ["<",<<"html">>," ",[],"\n>",
+                      [["<",<<"head">>," ",[],"\n>",
+                        [["<",<<"link">>," ",
+                          [[<<"href">>,"='",<<"default">>,"'"]],
+                          " \n/>"]],
+                        "</",<<"head">>,"\n>"],
+                       ["<",<<"body">>," ",[],"\n>",
+                        [<<"body">>],
+                        "</",<<"body">>,"\n>"]],
+                      "</",<<"html">>,"\n>"]],
                       htmerl:render(
                         htmerl:make_document(
                           htmerl:head(
@@ -46,20 +48,25 @@ add_attribute_test_() ->
                             ]},
                     htmerl:add_attributes(htmerl:link(),
                                           [htmerl:href(default)])),
-      ?_assertEqual(<<"<link multiple  \n/>">>,
+      ?_assertEqual(["<",<<"link">>," ",[<<"multiple">>]," \n/>"],
                     htmerl:render_tag(
                       htmerl:add_attribute(htmerl:link(),
                                            htmerl:multiple())))
     ].
 
 join_attribute_test_() ->
-    [ ?_assertEqual(<<"<link class='a b'  \n/>">>,
+    [ ?_assertEqual(["<",<<"link">>," ",
+                     [[<<"class">>,"='",[<<"a">>," ",<<"b">>],"'"]],
+                     " \n/>"],
                     htmerl:render_tag(
                       htmerl:add_attributes(htmerl:link(),
                                             [ htmerl:class(<<"a">>),
                                               htmerl:class(<<"b">>)
                                             ]))),
-      ?_assertEqual(<<"<link href='a' class='b c'  \n/>">>,
+      ?_assertEqual(["<",<<"link">>," ",
+                     [[<<"class">>,"='",[<<"b">>," ",<<"c">>],"'"],
+                      [<<"href">>,"='",<<"a">>,"'"]],
+                     " \n/>"],
                     htmerl:render_tag(
                       htmerl:add_attributes(htmerl:link(),
                                             [ htmerl:class(<<"b">>),

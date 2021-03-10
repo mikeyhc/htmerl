@@ -26,43 +26,36 @@
 %%% Render Functions %%%
 %%%%%%%%%%%%%%%%%%%%%%%%
 
--spec render(document()) -> binary().
+-spec render(document()) -> iolist().
 render(#document{doctype=DT, head=H, body=B}) ->
     HTML = render_tag(htmerl:html([H, B])),
-    <<"<!DOCTYPE ", DT/binary, ">\n\n", HTML/binary>>.
+    ["<!DOCTYPE ", DT, ">\n\n", HTML].
 
--spec render_tag(no_html | tag()) -> binary().
+-spec render_tag(no_html | tag()) -> iolist().
 render_tag(no_html) -> <<>>;
 render_tag(IOL) when is_binary(IOL) orelse is_list(IOL) -> IOL;
 render_tag(T=#tag{name=N, content=[], can_empty=true}) ->
     Attrs = render_attributes(T#tag.attributes),
-    <<"<", N/binary, " ", Attrs/binary, " \n/>">>;
+    ["<", N, " ", Attrs, " \n/>"];
 render_tag(T=#tag{name=N, content=C}) ->
     Content = render_tags(C),
     Attrs = render_attributes(T#tag.attributes),
-    <<"<", N/binary, " ", Attrs/binary, "\n>", Content/binary,
-      "</", N/binary, "\n>">>.
+    ["<", N, " ", Attrs, "\n>", Content, "</", N, "\n>"].
 
--spec bin_join(binary(), binary()) -> binary().
-bin_join(X, Y) -> <<Y/binary, X/binary>>.
 
--spec bin_join_space(binary(), binary()) -> binary().
-bin_join_space(X, Y) -> <<X/binary, " ", Y/binary>>.
-
--spec render_tags([tag()]) -> binary().
+-spec render_tags([tag()]) -> iolist().
 render_tags(L) ->
-    lists:foldl(fun bin_join/2, <<>>, lists:map(fun render_tag/1, L)).
+    lists:map(fun render_tag/1, L).
 
--spec render_attributes([attribute()]) -> binary().
+-spec render_attributes([attribute()]) -> iolist().
 render_attributes(L) ->
     AgList = aggregate_attrs(L),
-    lists:foldl(fun bin_join_space/2, <<>>,
-                lists:map(fun render_attribute/1, AgList)).
+    lists:map(fun render_attribute/1, AgList).
 
--spec render_attribute(attribute()) -> binary().
+-spec render_attribute(attribute()) -> iolist().
 render_attribute(#attribute{name=N, value=empty}) -> N;
 render_attribute(#attribute{name=N, value=V}) ->
-    <<N/binary, "=\'", V/binary, "\'">>.
+    [N, "=\'", V, "\'"].
 
 -spec aggregate_attrs([attribute()]) -> [attribute()].
 aggregate_attrs(L) ->
@@ -95,7 +88,7 @@ same_attr(A1, A2) -> A1#attribute.name =:= A2#attribute.name.
 join_attr(A1, A2) ->
     A1V = A1#attribute.value,
     A2V = A2#attribute.value,
-    A1#attribute{value=bin_join_space(A2V, A1V)}.
+    A1#attribute{value=[A2V, " ", A1V]}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Document Functions %%%
