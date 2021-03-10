@@ -33,7 +33,7 @@ render(#document{doctype=DT, head=H, body=B}) ->
 
 -spec render_tag(no_html | tag()) -> binary().
 render_tag(no_html) -> <<>>;
-render_tag(B) when is_binary(B) -> B;
+render_tag(IOL) when is_binary(IOL) orelse is_list(IOL) -> IOL;
 render_tag(T=#tag{name=N, content=[], can_empty=true}) ->
     Attrs = render_attributes(T#tag.attributes),
     <<"<", N/binary, " ", Attrs/binary, " \n/>">>;
@@ -235,22 +235,22 @@ summary(Tag) -> tag(<<"summary">>, Tag, [{can_empty, false}]).
 time(Tag) -> tag(<<"time">>, Tag, [{can_empty, false}]).
 
 -spec h1(tag() | [tag()]) -> tag().
-h1(Tag) -> tag(<<"h1">>, Tag, [{can_empty, false}]).
+h1(Tag) -> tag(<<"h1">>, Tag).
 
 -spec h2(tag() | [tag()]) -> tag().
-h2(Tag) -> tag(<<"h2">>, Tag, [{can_empty, false}]).
+h2(Tag) -> tag(<<"h2">>, Tag).
 
 -spec h3(tag() | [tag()]) -> tag().
-h3(Tag) -> tag(<<"h3">>, Tag, [{can_empty, false}]).
+h3(Tag) -> tag(<<"h3">>, Tag).
 
 -spec h4(tag() | [tag()]) -> tag().
-h4(Tag) -> tag(<<"h4">>, Tag, [{can_empty, false}]).
+h4(Tag) -> tag(<<"h4">>, Tag).
 
 -spec h5(tag() | [tag()]) -> tag().
-h5(Tag) -> tag(<<"h5">>, Tag, [{can_empty, false}]).
+h5(Tag) -> tag(<<"h5">>, Tag).
 
 -spec h6(tag() | [tag()]) -> tag().
-h6(Tag) -> tag(<<"h6">>, Tag, [{can_empty, false}]).
+h6(Tag) -> tag(<<"h6">>, Tag).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Standard Attributes %%%
